@@ -37,6 +37,6 @@ public class Timer : MonoBehaviour
 
   // Update is called once per frame
   void Update() {
-    tmp.text = TimeToString(Time.fixedTime);
+    tmp.text = TimeToString(GameData.Get().timer);
   }
 }

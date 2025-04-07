@@ -14,6 +14,8 @@ public class PlayerAttack : MonoBehaviour {
 
   private float lastAttackTime = 0;
 
+  public GameObject attackFxInstance;
+
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start() {
     PlayerInput pi = GetComponent<PlayerInput>();
@@ -27,6 +29,7 @@ public class PlayerAttack : MonoBehaviour {
 
   // Update is called once per frame
   void FixedUpdate() {
+    if(attackFxInstance) attackFxInstance.SetActive(attackHeld);
 
     GameData data = GameData.Get();
     data.attackRadiusMod = 1 + (data.gold/1000f);

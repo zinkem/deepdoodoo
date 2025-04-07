@@ -30,13 +30,20 @@ public class GameData {
   public float collectRadiusMod;
   public float attackShotsMod;
 
+  public float timer;
+
+
   public float depth;
+  public static float maxDepth;
+
+
 
   public GameData() {
     gold = 0;
     attackRadiusMod = 1;
     collectRadiusMod = 1;
     attackShotsMod = 1;
+    timer = 0;
   }
 
 

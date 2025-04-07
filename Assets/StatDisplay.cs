@@ -4,7 +4,8 @@ using UnityEngine;
 public enum StatMode {
   GOLD,
   DEPTH,
-  SHOTS
+  SHOTS,
+  MAX_DEPTH
 }
 
 public class StatDisplay : MonoBehaviour
@@ -24,6 +25,7 @@ public class StatDisplay : MonoBehaviour
       StatMode.GOLD => GameData.Get().gold.ToString(),
       StatMode.DEPTH => GameData.Get().depth.ToString(),
       StatMode.SHOTS => Mathf.Floor(GameData.Get().attackShotsMod + 1).ToString(),
+      StatMode.MAX_DEPTH => GameData.maxDepth.ToString(),
       _ => ""
     };
   }

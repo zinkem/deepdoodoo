@@ -111,8 +111,6 @@ public class PlayerParry : MonoBehaviour {
 		PlayerInput pi = GetComponent<PlayerInput>();
     InputAction inact = pi.actions.FindActionMap("Player").FindAction("Jump");
 		inact.canceled -= OnJumpReleased;
-
-		GameData.Reset();
   }
 
 }
