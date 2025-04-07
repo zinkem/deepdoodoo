@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -71,6 +72,19 @@ public class PlayerParry : MonoBehaviour {
 		}
   }
 
+	int touchCounter = 0;
+	void OnCollisionStay2D(Collision2D collision) {
+		touchCounter++;
+
+		if(touchCounter > 100) {
+			Destroy(gameObject);
+		}
+	}
+
+	void OnCollisionExit2D(Collision2D collision) {
+		touchCounter = 0;
+	}
+
 	IEnumerator EvalHit() {
 		yield return new WaitForSeconds(0.5f);
 		if(jumpHeld && jumpingOn != null) {
@@ -97,6 +111,8 @@ public class PlayerParry : MonoBehaviour {
 		PlayerInput pi = GetComponent<PlayerInput>();
     InputAction inact = pi.actions.FindActionMap("Player").FindAction("Jump");
 		inact.canceled -= OnJumpReleased;
+
+		GameData.Reset();
   }
 
 }

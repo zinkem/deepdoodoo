@@ -3,10 +3,12 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerAttack : MonoBehaviour {
 
   public GameObject ammo;
+  public Light2D atkRadius;
   public float attackCooldown = .2f;
   public float attackRadius = 64f;
 
@@ -25,6 +27,16 @@ public class PlayerAttack : MonoBehaviour {
 
   // Update is called once per frame
   void FixedUpdate() {
+
+    GameData data = GameData.Get();
+    data.attackRadiusMod = 1 + (data.gold/1000f);
+    data.attackShotsMod = data.gold/100f;
+
+    if(atkRadius) {
+      atkRadius.pointLightOuterRadius = CurrentAttackRadius();
+      atkRadius.pointLightInnerRadius = CurrentAttackRadius();
+    }
+
     if(attackHeld && (Time.fixedTime - lastAttackTime) > attackCooldown ) {
 
       RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, CurrentAttackRadius(), Vector2.down, 0f);
@@ -52,6 +64,11 @@ public class PlayerAttack : MonoBehaviour {
       }
 
       lastAttackTime = Time.fixedTime;
+    }
+
+    if(attackHeld) {
+      Rigidbody2D body = GetComponent<Rigidbody2D>();
+      body.AddForce(Vector2.up * body.mass * 200);
     }
   }
 

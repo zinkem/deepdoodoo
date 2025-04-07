@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour {
     Vector2 newvel = body.linearVelocity;
     newvel.x = moveInput.x * speed;
     body.linearVelocity = newvel;
+
+    GameData.Get().depth = Mathf.Max(-transform.position.y, GameData.Get().depth);
   }
 
   private Vector2 moveInput;

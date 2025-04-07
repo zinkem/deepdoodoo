@@ -10,6 +10,11 @@ public class CollectRewards : MonoBehaviour {
 
   // Update is called once per frame
   void FixedUpdate() {
+
+    GameData gd = GameData.Get();
+
+    collectRadius = 48 + ((gd.gold/200) * 96);
+
     RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, collectRadius, Vector2.down, 0f);
 
     foreach(RaycastHit2D hit in hits) {
@@ -31,6 +36,6 @@ public class CollectRewards : MonoBehaviour {
 
     DestroyFxScript destroy = collision.gameObject.GetComponent<DestroyFxScript>();
     destroy.DestroyWithFx();
-    GameData.Get().gold++;
+    GameData.AddGold(1);
   }
 }
