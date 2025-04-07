@@ -2,8 +2,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerParry : MonoBehaviour
-{
+public class PlayerParry : MonoBehaviour {
+
+
+	public GameObject dashFx;
+
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start() {
 		PlayerInput pi = GetComponent<PlayerInput>();
@@ -15,11 +18,14 @@ public class PlayerParry : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate() {
 		if(jumpHeld) {
-			transform.localScale = Vector3.one * 1.5f;
+			transform.localScale = Vector3.one * .8f;
+			Rigidbody2D body = GetComponent<Rigidbody2D>();
+			body.AddForce(Vector2.down * body.mass * 350);
+			if(dashFx) dashFx.SetActive(true);
 		} else {
 			transform.localScale = Vector3.one;
+			if(dashFx) dashFx.SetActive(false);
 		}
-
 	}
 
 	private bool jumpHeld = false;
@@ -42,10 +48,10 @@ public class PlayerParry : MonoBehaviour
 		if(Time.fixedTime - hitTime < 0.5f) {
 			Debug.Log("HIT SUCCESS");
 			Rigidbody2D body = GetComponent<Rigidbody2D>();
-			body.AddForce(Vector2.up * body.mass * 200, ForceMode2D.Impulse);
+			body.AddForce(body.linearVelocity.normalized * body.mass * 200, ForceMode2D.Impulse);
 			if(jumpingOn) {
 				DestroyFxScript des = jumpingOn.GetComponent<DestroyFxScript>();
-				if(des) des.DestroyWithFx();
+				if(des) des.DestroyWithFx(true);
 				jumpingOn = null;
 			}
 		}

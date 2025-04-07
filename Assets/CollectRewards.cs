@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class CollectRewards : MonoBehaviour {
 
-
-  private int collected = 0;
   public float collectRadius = 48;
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start() {
@@ -33,6 +31,6 @@ public class CollectRewards : MonoBehaviour {
 
     DestroyFxScript destroy = collision.gameObject.GetComponent<DestroyFxScript>();
     destroy.DestroyWithFx();
-    collected++;
+    GameData.Get().gold++;
   }
 }

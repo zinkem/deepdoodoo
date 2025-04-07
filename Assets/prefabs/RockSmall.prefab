@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -5947491902426912441}
   - component: {fileID: -2835257145786603890}
   - component: {fileID: 8655603255940240131}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RockSmall
   m_TagString: Danger
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 1
   m_AngularDamping: 0.05
-  m_GravityScale: 5
+  m_GravityScale: -5
   m_Material: {fileID: 6200000, guid: 7138ccbf1d6144ff3b35087337e89cb6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -218,5 +218,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7537875147d504d359464867c545190f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 8456636067350066172, guid: 38db61137c8534e39b249b18c9b7bd42, type: 3}
+  explosion: {fileID: 5564037484044878613, guid: 066458c6e3c6545e19df48bfe56cbc5c, type: 3}
   reward: {fileID: 5564037484044878613, guid: 066458c6e3c6545e19df48bfe56cbc5c, type: 3}

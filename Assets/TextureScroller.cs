@@ -3,6 +3,7 @@ using UnityEngine;
 public class TextureScroller : MonoBehaviour
 {
     public GameObject target;
+    public float scrollSpeed;
 
 
     private SpriteRenderer sr;
@@ -13,7 +14,15 @@ public class TextureScroller : MonoBehaviour
 
     // Update is called once per frame
     void LateUpdate() {
-        //int segments = (int)(target.transform.position.y / sr.bounds.max.y);
-        sr.material.mainTextureOffset = Vector2.up * target.transform.position.y;
+        float positionMod = target.transform.position.y * scrollSpeed;
+        float height = sr.size.y;
+        int segments = (int)(positionMod / height);
+
+        float remainder = positionMod - (segments * height);
+        float test = (remainder * 2 / height) - 1;
+
+        Vector2 offset = new Vector2(0, test);
+
+        sr.material.SetVector("_offset", offset);
     }
 }

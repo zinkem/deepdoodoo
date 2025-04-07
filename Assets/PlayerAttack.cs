@@ -19,30 +19,36 @@ public class PlayerAttack : MonoBehaviour {
     inact.canceled += OnAttackReleased;
   }
 
+  private float CurrentAttackRadius() {
+    return attackRadius * GameData.Get().attackRadiusMod;
+  }
+
   // Update is called once per frame
   void FixedUpdate() {
     if(attackHeld && (Time.fixedTime - lastAttackTime) > attackCooldown ) {
 
-      RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, attackRadius, Vector2.down, 0f);
-
+      RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, CurrentAttackRadius(), Vector2.down, 0f);
+      int targets_hit = 0;
       Transform targetLock = null;
       foreach(RaycastHit2D hit in hits){
         if(hit.transform.gameObject.tag == "Danger") {
           targetLock = hit.transform;
-          break;
+          targets_hit++;
+
+          GameObject attack = Instantiate(ammo, transform);
+
+          LineRenderer lr = attack.GetComponent<LineRenderer>();
+          if(lr) {
+            lr.SetPosition(0, transform.position);
+            lr.SetPosition(1, targetLock.position);
+          }
+
+          StartCoroutine(Hit(attack, targetLock.gameObject, 0.1f));
+
+          if(targets_hit > GameData.Get().attackShotsMod) {
+            break;
+          }
         }
-      }
-
-      if(targetLock) {
-        GameObject attack = Instantiate(ammo, transform);
-
-        LineRenderer lr = attack.GetComponent<LineRenderer>();
-        if(lr) {
-          lr.SetPosition(0, transform.position);
-          lr.SetPosition(1, targetLock.position);
-        }
-
-        StartCoroutine(Hit(attack, targetLock.gameObject, 0.1f));
       }
 
       lastAttackTime = Time.fixedTime;
@@ -58,7 +64,7 @@ public class PlayerAttack : MonoBehaviour {
     }
 
     if(victim != null && victim.GetComponent<DestroyFxScript>()) {
-      victim.GetComponent<DestroyFxScript>().DestroyWithFx(true);
+      victim.GetComponent<DestroyFxScript>().DestroyWithFx(false);
     } else {
       Destroy(victim);
     }
